@@ -4,7 +4,7 @@ var $ = require('domtastic');
 var buildState = function(msg, data) {
     var state = data.stage;
 
-    data.items.every(function(item) {
+    data.items.map(function(item) {
         var row = state.get(item.get('x'));
         row = row.set(item.get('y'), item.get('symbol'));
         state = state.set(item.get('x'), row);
