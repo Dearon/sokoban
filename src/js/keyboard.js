@@ -3,21 +3,19 @@ var combokeys = new Combokeys(document);
 var PubSub = require('pubsub-js');
 
 combokeys.bind('left', function() {
-    PubSub.publish('movement', 'left');
+    PubSub.publish('keypress', 'left');
 });
 
 combokeys.bind('right', function() {
-    PubSub.publish('movement', 'right');
+    PubSub.publish('keypress', 'right');
 });
 
 combokeys.bind('up', function() {
-    PubSub.publish('movement', 'up');
+    PubSub.publish('keypress', 'up');
 });
 
 combokeys.bind('down', function() {
-    PubSub.publish('movement', 'down');
+    PubSub.publish('keypress', 'down');
 });
 
-module.exports = {
-    'world': {}
-}
+module.exports = {};

@@ -1,6 +1,6 @@
 var Immutable = require('immutable');
 
-var stage = Immutable.List([
+var level = Immutable.List([
     Immutable.List(['#', '#', '#', '#', '#', '#', '#']),
     Immutable.List(['#', '.', '.', '.', '.', '.', '#']),
     Immutable.List(['#', '.', '.', '.', '.', '.', '#']),
@@ -8,20 +8,23 @@ var stage = Immutable.List([
     Immutable.List(['#', '#', '#', '#', '#', '#', '#'])
 ]);
 
-var items = Immutable.Map({
-    player: Immutable.Map({
-        symbol: '@',
-        x: 2,
-        y: 3
-    }),
-    box: Immutable.Map({
+var items = Immutable.List([
+    Immutable.Map({
+        type: 'box',
         symbol: 'B',
         x: 1,
         y: 3
     })
+]);
+
+var player = Immutable.Map({
+    symbol: '@',
+    x: 2,
+    y: 3
 });
 
-module.exports = {
-    stage: stage,
-    items: items
-}
+module.exports = Immutable.Map({
+    level: level,
+    items: items,
+    player: player
+});

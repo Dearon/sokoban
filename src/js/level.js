@@ -1,13 +1,17 @@
+var PubSub = require('pubsub-js');
+
 var level1 = require('./levels/01.js');
 
 var levels = {
     1: level1
-}
+};
 
-module.exports = function(level) {
-    if (levels[level] != "undefined") {
-        return levels[level];
-    } else {
-        return false;
+var load = function(msg, data) {
+    if (levels[data] != "undefined") {
+        PubSub.publish('new level', levels[data]);
     }
 };
+
+PubSub.subscribe('load level', load);
+
+module.exports = {};
