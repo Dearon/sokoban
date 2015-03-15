@@ -1,41 +1,46 @@
 var Immutable = require('immutable');
 
-var wallCollision = function(level, x, y) {
-    var row = level.get(x);
-    return row.get(y) === '#';
-};
+var collision = require('./collision.js');
 
-var boxCollision = function(items, x, y) {
-    var boxes = items.filter(function(value) {
-        return value.get('type') === 'box';
-    });
+var changeCoordinates = function(map, direction) {
+    if (direction === 'left') {
+        return map.set('y', map.get('y') - 1);
+    }
 
-    return boxes.reduce(function(collision, box) {
-        if (box.get('x') == x && box.get('y') == y) {
-            collision = true;
-        }
+    if (direction === 'right') {
+        return map.set('y', map.get('y') + 1);
+    }
 
-        return collision;
-    }, false);
-};
+    if (direction === 'up') {
+        return map.set('x', map.get('x') - 1);
+    }
+
+    if (direction === 'down') {
+        return map.set('x', map.get('x') + 1);
+    }
+}
 
 module.exports = function(key, level, coords) {
     var items = coords.get('items');
     var player = coords.get('player');
 
-    if (key === 'left') { player = player.set('y', player.get('y') - 1); }
-    if (key === 'right') { player = player.set('y', player.get('y') + 1); }
-    if (key === 'up') { player = player.set('x', player.get('x') - 1); }
-    if (key === 'down') { player = player.set('x', player.get('x') + 1); }
+    player = changeCoordinates(player, key);
 
-    if (wallCollision(level, player.get('x'), player.get('y'))) {
-        return false;
-    }
+    var playerCollision = collision(level, items, player);
 
-    console.log(boxCollision(items, player.get('x'), player.get('y')));
+    if (playerCollision !== false) {
+        if (playerCollision.get('type') === 'box') {
+            var box = items.get(playerCollision.get('key'));
+            box = changeCoordinates(box, key);
 
-    if (boxCollision(items, player.get('x'), player.get('y'))) {
-        return false;
+            if (collision(level, items, box) !== false) {
+                return false;
+            }
+
+            items = items.set(playerCollision.get('key'), box);
+        } else {
+            return false;
+        }
     }
 
     return Immutable.Map({
