@@ -3,11 +3,23 @@ module.exports = function(endpoints, items) {
         return value.get('type') === 'box';
     });
 
-    boxes.map(function(box) {
-        endpoints.map(function(endpoint) {
+    var won = boxes.reduce(function(won, box) {
+        var match = endpoints.reduce(function(match, endpoint) {
             if (box.get('x') === endpoint.get('x') && box.get('y') === endpoint.get('y')) {
-                console.log('You won!');
+                return true;
             }
-        });
-    });
+
+            return match;
+        }, false);
+
+        if (match) {
+            return won;
+        } else {
+            return false;
+        }
+    }, true);
+
+    if (won) {
+        console.log('You won!');
+    }
 };
