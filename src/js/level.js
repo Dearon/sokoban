@@ -14,6 +14,11 @@ var load = function(msg, data) {
             level = level.push(Immutable.List(levels[data].level[i]));
         }
 
+        var endpoints = Immutable.List();
+        for (var i = 0; i < levels[data].endpoints.length; i++) {
+            endpoints = endpoints.push(Immutable.Map(levels[data].endpoints[i]));
+        }
+
         var items = Immutable.List();
         for (var i = 0; i < levels[data].items.length; i++) {
             items = items.push(Immutable.Map(levels[data].items[i]));
@@ -23,6 +28,7 @@ var load = function(msg, data) {
 
         PubSub.publish('new level', Immutable.Map({
             level: level,
+            endpoints: endpoints,
             items: items,
             player: player
         }));

@@ -1,6 +1,7 @@
 var Immutable = require('immutable');
 
 var collision = require('./collision.js');
+var issolved = require('./issolved.js');
 
 var changeCoordinates = function(map, direction) {
     if (direction === 'left') {
@@ -21,6 +22,7 @@ var changeCoordinates = function(map, direction) {
 }
 
 module.exports = function(key, level, coords) {
+    var endpoints = coords.get('endpoints');
     var items = coords.get('items');
     var player = coords.get('player');
 
@@ -43,7 +45,10 @@ module.exports = function(key, level, coords) {
         }
     }
 
+    issolved(endpoints, items);
+
     return Immutable.Map({
+        endpoints: endpoints,
         items: items,
         player: player
     });
