@@ -1,8 +1,8 @@
 var Immutable = require('immutable');
 
 var wall = function(level, map) {
-    var row = level.get(map.get('x'));
-    return (row.get(map.get('y')) === '#');
+    var row = level.get(map.get('y'));
+    return (row.get(map.get('x')) === '#');
 }
 
 var box = function(items, map) {

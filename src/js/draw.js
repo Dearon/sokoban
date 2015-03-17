@@ -32,7 +32,6 @@ var drawSprite = function(sprite, x, y) {
 };
 
 var drawLevel = function() {
-    console.log(level);
     level.map(function(row, rowOffset) {
         row.map(function(tile, tileOffset) {
             var x = tileOffset * 32;

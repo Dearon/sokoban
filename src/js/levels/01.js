@@ -15,28 +15,28 @@ var level = [
 var endpoints = [
     {
         symbol: '*',
-        x: 2,
-        y: 1
-    },
-    {
-        symbol: '*',
-        x: 3,
-        y: 5
+        x: 1,
+        y: 2
     },
     {
         symbol: '*',
         x: 5,
-        y: 4
+        y: 3
     },
     {
         symbol: '*',
         x: 4,
-        y: 1
+        y: 5
     },
     {
         symbol: '*',
-        x: 6,
-        y: 3
+        x: 1,
+        y: 4
+    },
+    {
+        symbol: '*',
+        x: 3,
+        y: 6
     },
     {
         symbol: '*',
@@ -45,8 +45,8 @@ var endpoints = [
     },
     {
         symbol: '*',
-        x: 7,
-        y: 4
+        x: 4,
+        y: 7
     }
 ]
 
@@ -54,14 +54,14 @@ var items = [
     {
         type: 'box',
         symbol: 'B',
-        x: 2,
-        y: 4
+        x: 4,
+        y: 2
     },
     {
         type: 'box',
         symbol: 'B',
-        x: 3,
-        y: 4
+        x: 4,
+        y: 3
     },
     {
         type: 'box',
@@ -72,33 +72,33 @@ var items = [
     {
         type: 'box',
         symbol: 'B',
-        x: 6,
-        y: 1
+        x: 1,
+        y: 6
     },
     {
         type: 'box',
         symbol: 'B',
-        x: 6,
-        y: 3
+        x: 3,
+        y: 6
     },
     {
         type: 'box',
         symbol: 'B',
-        x: 6,
-        y: 4
+        x: 4,
+        y: 6
     },
     {
         type: 'box',
         symbol: 'B',
-        x: 6,
-        y: 5
+        x: 5,
+        y: 6
     }
 ];
 
 var player = {
     symbol: '@',
-    x: 2,
-    y: 3
+    x: 3,
+    y: 2
 };
 
 module.exports = {

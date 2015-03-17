@@ -30,24 +30,24 @@ var buildState = function() {
 
 var addEndpoints = function(endpoints) {
     endpoints.map(function(endpoint) {
-        var row = state.get(endpoint.get('x'));
-        row = row.set(endpoint.get('y'), endpoint.get('symbol'));
-        state = state.set(endpoint.get('x'), row);
+        var row = state.get(endpoint.get('y'));
+        row = row.set(endpoint.get('x'), endpoint.get('symbol'));
+        state = state.set(endpoint.get('y'), row);
     });
 };
 
 var addItems = function(items) {
     items.map(function(item) {
-        var row = state.get(item.get('x'));
-        row = row.set(item.get('y'), item.get('symbol'));
-        state = state.set(item.get('x'), row);
+        var row = state.get(item.get('y'));
+        row = row.set(item.get('x'), item.get('symbol'));
+        state = state.set(item.get('y'), row);
     });
 };
 
 var addPlayer = function(player) {
-    var row = state.get(player.get('x'));
-    row = row.set(player.get('y'), player.get('symbol'));
-    state = state.set(player.get('x'),  row);
+    var row = state.get(player.get('y'));
+    row = row.set(player.get('x'), player.get('symbol'));
+    state = state.set(player.get('y'),  row);
 };
 
 var handleKeypress = function(msg, data) {

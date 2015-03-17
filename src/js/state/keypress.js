@@ -5,19 +5,19 @@ var issolved = require('./issolved.js');
 
 var changeCoordinates = function(map, direction) {
     if (direction === 'left') {
-        return map.set('y', map.get('y') - 1);
-    }
-
-    if (direction === 'right') {
-        return map.set('y', map.get('y') + 1);
-    }
-
-    if (direction === 'up') {
         return map.set('x', map.get('x') - 1);
     }
 
-    if (direction === 'down') {
+    if (direction === 'right') {
         return map.set('x', map.get('x') + 1);
+    }
+
+    if (direction === 'up') {
+        return map.set('y', map.get('y') - 1);
+    }
+
+    if (direction === 'down') {
+        return map.set('y', map.get('y') + 1);
     }
 }
 
