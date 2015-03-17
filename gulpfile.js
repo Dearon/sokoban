@@ -12,6 +12,11 @@ gulp.task('html', function() {
         .pipe(gulp.dest(dest));
 });
 
+gulp.task('img', function() {
+    return gulp.src(src + '/img/*')
+        .pipe(gulp.dest(dest + '/img'));
+});
+
 gulp.task('javascript', function() {
     var bundler = browserify({
         entries: [src + '/js/sokoban.js'],
@@ -30,8 +35,9 @@ gulp.task('javascript', function() {
     return bundle();
 });
 
-gulp.task('default', ['html', 'javascript']);
+gulp.task('default', ['html', 'img', 'javascript']);
 gulp.task('watch', function() {
     gulp.watch(src + '/www/*.html', ['html']);
+    gulp.watch(src + '/img/*', ['img']);
     gulp.watch(src + '/js/**/*.js', ['javascript']);
 });
