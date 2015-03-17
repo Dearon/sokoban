@@ -22,9 +22,11 @@ var sprites = {
 };
 
 var level = '';
+var resources = '';
 
 PubSub.subscribe('new level', function(msg, data) {
     level = data.get('level');
+    resources = data.get('resources');
 });
 
 var drawSprite = function(sprite, x, y) {
@@ -46,6 +48,15 @@ var drawLevel = function() {
     });
 };
 
+var drawBoxes = function() {
+    var boxes = resources.get('boxes');
+    boxes.map(function(box) {
+        var x = box.get('x') * 32;
+        var y = box.get('y') * 32;
+        drawSprite('box', x, y);
+    });
+};
+
 var draw = function(msg, data) {
     var html = data.reduce(function(html, row) {
         var rowHtml = row.reduce(function(html, field) {
@@ -57,6 +68,7 @@ var draw = function(msg, data) {
 
     $('.sokoban').html(html);
     drawLevel();
+    drawBoxes();
 };
 
 PubSub.subscribe('new state', draw);
