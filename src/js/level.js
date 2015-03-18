@@ -30,24 +30,9 @@ var load = function(msg, data) {
 
         resources = resources.set('player', Immutable.Map(levels[data].resources.player));
 
-        var endpoints = Immutable.List();
-        for (var i = 0; i < levels[data].endpoints.length; i++) {
-            endpoints = endpoints.push(Immutable.Map(levels[data].endpoints[i]));
-        }
-
-        var items = Immutable.List();
-        for (var i = 0; i < levels[data].items.length; i++) {
-            items = items.push(Immutable.Map(levels[data].items[i]));
-        }
-
-        var player = Immutable.Map(levels[data].player);
-
         PubSub.publish('new level', Immutable.Map({
             level: level,
             resources: resources,
-            endpoints: endpoints,
-            items: items,
-            player: player
         }));
     }
 };

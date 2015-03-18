@@ -1,16 +1,11 @@
-module.exports = function(endpoints, items) {
-    var boxes = items.filter(function(value) {
-        return value.get('type') === 'box';
-    });
+module.exports = function(resources) {
+    var boxes = resources.get('boxes');
+    var endpoints = resources.get('endpoints');
 
     var won = boxes.reduce(function(won, box) {
-        var match = endpoints.reduce(function(match, endpoint) {
-            if (box.get('x') === endpoint.get('x') && box.get('y') === endpoint.get('y')) {
-                return true;
-            }
-
-            return match;
-        }, false);
+        var match = endpoints.find(function(endpoint) {
+            return (box.get('x') === endpoint.get('x') && box.get('y') === endpoint.get('y'));
+        });
 
         if (match) {
             return won;

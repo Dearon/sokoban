@@ -1,36 +1,30 @@
 var Immutable = require('immutable');
 
-var wall = function(level, map) {
-    var row = level.get(map.get('y'));
-    return (row.get(map.get('x')) === '#');
+var wall = function(level, target) {
+    var row = level.get(target.get('y'));
+    return (row.get(target.get('x')) === '#');
 }
 
-var box = function(items, map) {
-    var boxes = items.filter(function(value) {
-        return value.get('type') === 'box';
+var box = function(resources, target) {
+    var boxes = resources.get('boxes');
+    return boxes.findIndex(function(box) {
+        return (target.get('x') === box.get('x') && target.get('y') === box.get('y'));
     });
-
-    return boxes.reduce(function(collision, box, key) {
-        if (box.get('x') == map.get('x') && box.get('y') == map.get('y')) {
-            return key;
-        }
-
-        return collision;
-    }, false);
 }
 
-module.exports = function(level, items, map) {
-    if (wall(level, map) !== false) {
+module.exports = function(level, resources, target) {
+    if (wall(level, target) !== false) {
         return Immutable.Map({
             type: 'wall',
-            key: false
         });
     }
 
-    if (box(items, map) !== false) {
+    var index = box(resources, target);
+
+    if (index !== -1) {
         return Immutable.Map({
             type: 'box',
-            key: box(items, map)
+            index: index
         });
     }
 

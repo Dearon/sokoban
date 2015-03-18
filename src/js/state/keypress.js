@@ -21,35 +21,30 @@ var changeCoordinates = function(map, direction) {
     }
 }
 
-module.exports = function(key, level, coords) {
-    var endpoints = coords.get('endpoints');
-    var items = coords.get('items');
-    var player = coords.get('player');
+module.exports = function(key, level, resources) {
+    var player = changeCoordinates(resources.get('player'), key);
+    resources = resources.set('player', player);
 
-    player = changeCoordinates(player, key);
+    var playerCollides = collision(level, resources, resources.get('player'));
 
-    var playerCollision = collision(level, items, player);
-
-    if (playerCollision !== false) {
-        if (playerCollision.get('type') === 'box') {
-            var box = items.get(playerCollision.get('key'));
+    if (playerCollides !== false) {
+        if (playerCollides.get('type') === 'box') {
+            var boxes = resources.get('boxes');
+            var box = boxes.get(playerCollides.get('index'));
             box = changeCoordinates(box, key);
 
-            if (collision(level, items, box) !== false) {
+            if (collision(level, resources, box) !== false) {
                 return false;
             }
 
-            items = items.set(playerCollision.get('key'), box);
+            boxes = boxes.set(playerCollides.get('index'), box);
+            resources = resources.set('boxes', boxes);
         } else {
             return false;
         }
     }
 
-    issolved(endpoints, items);
+    issolved(resources);
 
-    return Immutable.Map({
-        endpoints: endpoints,
-        items: items,
-        player: player
-    });
+    return resources;
 };

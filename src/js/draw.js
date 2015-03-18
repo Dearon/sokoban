@@ -1,6 +1,5 @@
 var PubSub = require('pubsub-js');
 var Immutable = require('immutable');
-var $ = require('domtastic');
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -25,16 +24,23 @@ var sprites = {
     box: {
         x: 192,
         y: 256
+    },
+    darkbox: {
+        x: 256,
+        y: 256
+    },
+    player: {
+        x: 362,
+        y: 248,
+        width: 36,
+        height: 59
     }
 };
 
 var level = '';
-var resources = '';
-var flatEndpoints = Immutable.List();
 
 PubSub.subscribe('new level', function(msg, data) {
     level = data.get('level');
-    resources = data.get('resources');
 });
 
 var drawSprite = function(sprite, x, y) {
@@ -45,12 +51,12 @@ var drawSprite = function(sprite, x, y) {
 
     if (sprites[sprite].width) {
         width = sprites[sprite].width;
-        var x = x + (((64 - width) / 2) * scale);
+        x = x + (((64 - width) / 2) * scale);
     }
 
     if (sprites[sprite].height) {
         height = sprites[sprite].height;
-        var y = y + (((64 - height) / 2) * scale);
+        y = y + (((64 - height) / 2) * scale);
     }
 
     ctx.drawImage(spritesheet, sprites[sprite].x, sprites[sprite].y, width, height, x, y, width*scale, height*scale);
@@ -71,8 +77,7 @@ var drawLevel = function() {
     });
 };
 
-var drawEndpoints = function() {
-    var endpoints = resources.get('endpoints');
+var drawEndpoints = function(endpoints) {
     endpoints.map(function(endpoint) {
         var x = endpoint.get('x') * 32;
         var y = endpoint.get('y') * 32;
@@ -80,28 +85,30 @@ var drawEndpoints = function() {
     });
 };
 
-var drawBoxes = function() {
-    var boxes = resources.get('boxes');
+var drawBoxes = function(boxes, endpoints) {
     boxes.map(function(box) {
         var x = box.get('x') * 32;
         var y = box.get('y') * 32;
-        drawSprite('box', x, y);
+
+        if (endpoints.contains(box)) {
+            drawSprite('darkbox', x, y);
+        } else {
+            drawSprite('box', x, y);
+        }
     });
 };
 
-var draw = function(msg, data) {
-    var html = data.reduce(function(html, row) {
-        var rowHtml = row.reduce(function(html, field) {
-            return html + field;
-        }, '');
-        
-        return html + rowHtml + '<br>';
-    }, '');
+var drawPlayer = function(player) {
+    var x = player.get('x') * 32;
+    var y = player.get('y') * 32;
+    drawSprite('player', x, y);
+};
 
-    $('.sokoban').html(html);
+var draw = function(msg, data) {
     drawLevel();
-    drawEndpoints();
-    drawBoxes();
+    drawEndpoints(data.get('endpoints'));
+    drawBoxes(data.get('boxes'), data.get('endpoints'));
+    drawPlayer(data.get('player'));
 };
 
 PubSub.subscribe('new state', draw);
