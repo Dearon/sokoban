@@ -6275,7 +6275,7 @@ var Immutable = require('immutable');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var spritesheet = new Image();
-spritesheet.src = './img/sprites.png';
+spritesheet.src = './immutable/img/sprites.png';
 
 var sprites = {
     wall: {
@@ -6713,7 +6713,7 @@ module.exports = function(resources) {
     }, true);
 
     if (won) {
-        console.log('You won!');
+        alert('You won!');
     }
 };
 

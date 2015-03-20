@@ -5,7 +5,7 @@ var level = _.clone(level1, true);
 var levelSolved = false;
 
 var spritesheet = new Image();
-spritesheet.src = 'sprites.png';
+spritesheet.src = 'mutable/sprites.png';
 
 var sprites = {
     wall: { x: 64, y: 0, width: 64, height: 64 },
@@ -83,7 +83,7 @@ var move = function(object, direction, canPush = true) {
 
 var solved = function() {
     if (levelSolved) {
-        console.log('You won!');
+        alert('You won!');
     }
 }
 
